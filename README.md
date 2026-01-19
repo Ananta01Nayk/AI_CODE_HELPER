@@ -1,4 +1,4 @@
-# AI Code Helper 🧠⚙️
+# AI Code Helper
 
 AI Code Helper is an **AI-powered developer assistant** that analyzes Python codebases to help developers **find syntax errors, detect logical issues, understand code structure, and improve code quality**.
 
@@ -8,36 +8,36 @@ The system combines **static code analysis (AST)** with **LLM-based reasoning (R
 
 ## 🚀 Features
 
-- 🔍 **Code Structure Analysis**
+-  **Code Structure Analysis**
   - Extracts functions, classes, and their source code
   - Builds function call and dependency relationships
 
-- ❌ **Syntax Error Detection**
+-  **Syntax Error Detection**
   - Detects Python syntax errors with exact file and line number
   - Prevents invalid code from being analyzed further
 
-- ⚠️ **Logical Bug Detection (Static)**
+-  **Logical Bug Detection (Static)**
   - Unused variables
   - Empty `except` blocks
   - Potential logical issues (non-hallucinated)
 
-- 🧠 **AI-Powered Explanations (RAG)**
+-  **AI-Powered Explanations (RAG)**
   - LLM explains detected issues using real code context
   - No guessing or hallucination
   - Suggests safe improvements
 
-- 🔎 **Semantic Search with Vector DB**
+-  **Semantic Search with Vector DB**
   - Code, syntax errors, and logical issues are embedded together
   - Enables intelligent retrieval using FAISS
 
-- 🖥️ **Streamlit UI**
+- **Streamlit UI**
   - Browse functions and classes
   - View syntax errors and potential issues
   - Ask AI questions about code and bugs
 
 ---
 
-## 🏗️ Project Architecture
+##  Project Architecture
 
 ```
 Codebase
@@ -55,7 +55,7 @@ Developer Assistance (UI / IDE-ready)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 AI_CODE_HELPER/
@@ -92,26 +92,26 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
-### 1️⃣ Extract Code Knowledge
+###  Extract Code Knowledge
 ```bash
 python extract_code_knowledge.py
 ```
 
-### 2️⃣ Build Vector Database
+### Build Vector Database
 ```bash
 python build_code_memory.py
 ```
 
-### 3️⃣ Start the UI
+### Start the UI
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-## 🧠 How This Helps Developers
+## How This Helps Developers
 
 - Detects **real issues using deterministic logic**
 - Uses AI to **explain**, not invent problems
@@ -120,7 +120,7 @@ streamlit run app.py
 
 ---
 
-## 🎯 Design Philosophy
+## Design Philosophy
 
 - **Static analysis detects issues**
 - **JSON stores the truth**
@@ -131,7 +131,7 @@ This avoids hallucination and builds developer trust.
 
 ---
 
-## 📌 Future Improvements
+## Future Improvements
 
 - VS Code Extension
 - Auto-fix suggestions
@@ -143,7 +143,7 @@ This avoids hallucination and builds developer trust.
 
 ## 👨‍💻 Author
 
-Built as an **AI Engineering project** focused on creating real-world, developer-centric tooling using Python, AST, FAISS, and LLMs.
+Ananta Nayak
 
 ---
 
