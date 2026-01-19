@@ -3,42 +3,85 @@ import os
 from sentence_transformers import SentenceTransformer
 from langchain_community.vectorstores import FAISS
 
-# Load code knowledge
-with open("DATA/code_knowledge.json", "r", encoding="utf-8") as f:
+# LOAD CODE KNOWLEDGE
+
+with open("DATA/code_knowledge.json", encoding="utf8") as f:
     knowledge = json.load(f)
 
 texts = []
 
-# Convert functions to documents
+# CODE DOCUMENTS
+
 for fn in knowledge.get("functions", {}).values():
     texts.append(
         f"""
-FUNCTION: {fn.get('name','')}
-FILE: {fn.get('file','')}
-LINES: {fn.get('start_line','na')} - {fn.get('end_line','na')}
+TYPE: FUNCTION
+NAME: {fn['name']}
+FILE: {fn['file']}
+LINES: {fn['start']} - {fn['end']}
+
 CODE:
-{fn.get('code','')}
+{fn['code']}
 """
     )
 
-# Convert classes to documents
+# CODE DOCUMENTS
+
 for cls in knowledge.get("classes", {}).values():
     texts.append(
         f"""
-CLASS: {cls.get('name','')}
-FILE: {cls.get('file','')}
-LINES: {cls.get('start_line','na')} - {cls.get('end_line','na')}
+TYPE: CLASS
+NAME: {cls['name']}
+FILE: {cls['file']}
+LINES: {cls['start']} - {cls['end']}
+
 CODE:
-{cls.get('code','')}
+{cls['code']}
 """
     )
 
-print(f"loaded {len(texts)} code blocks")
+# SYNTAX ERROR DOCUMENTS
 
-# Load free local embedding model
+for err in knowledge.get("syntax_errors", []):
+    texts.append(
+        f"""
+TYPE: SYNTAX_ERROR
+FILE: {err['file']}
+LINE: {err['line']}
+MESSAGE: {err['message']}
+
+IMPACT:
+This syntax error prevents Python from parsing this file.
+"""
+    )
+
+# LOGICAL BUG DOCUMENTS
+
+for bug in knowledge.get("logical_bugs", []):
+    texts.append(
+        f"""
+TYPE: LOGICAL_BUG
+BUG: {bug['type']}
+NAME: {bug.get('name', 'N/A')}
+FILE: {bug['file']}
+
+NOTE:
+This is a statically detected potential issue.
+It may or may not be an actual bug depending on intent.
+"""
+    )
+
+# SAFETY CHECK
+
+if not texts:
+    raise RuntimeError("No documents found to embed. Run extract_code_knowledge.py first.")
+
+print(f"Loaded {len(texts)} total documents (code + issues)")
+
+# EMBEDDING MODEL
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Wrap for LangChain
 class LocalEmbeddings:
     def embed_documents(self, texts):
         return model.encode(texts).tolist()
@@ -46,13 +89,22 @@ class LocalEmbeddings:
     def embed_query(self, text):
         return model.encode([text])[0].tolist()
 
+    # REQUIRED BY FAISS
+    def __call__(self, text):
+        return self.embed_query(text)
+
 embeddings = LocalEmbeddings()
 
-# Build FAISS
-db = FAISS.from_texts(texts, embeddings)
+# BUILD FAISS VECTOR DB
 
-# Save
+db = FAISS.from_texts(
+    texts=texts,
+    embedding=embeddings
+)
+
+# SAVE VECTOR DB
+
 os.makedirs("DATA/VECTOR_DB", exist_ok=True)
 db.save_local("DATA/VECTOR_DB")
 
-print("vector database built successfully")
+print(" Code memory vector DB built successfully")

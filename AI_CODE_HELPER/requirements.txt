@@ -1,4 +1,18 @@
-streamlit
-langchain
-google-generativeai
+# Core Python utilities
+python-dotenv
+
+# Static analysis & embeddings
+sentence-transformers
+torch
+numpy
+
+# Vector database
 faiss-cpu
+
+# LangChain + integrations
+langchain
+langchain-community
+langchain-google-genai
+
+# Web UI
+streamlit
