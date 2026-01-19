@@ -6,7 +6,7 @@ The system combines **static code analysis (AST)** with **LLM-based reasoning (R
 
 ---
 
-## 🚀 Features
+##  Features
 
 -  **Code Structure Analysis**
   - Extracts functions, classes, and their source code
@@ -141,12 +141,12 @@ This avoids hallucination and builds developer trust.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 Ananta Nayak
 
 ---
 
-## ⭐ Summary
+##  Summary
 
 > AI Code Helper is not just a chatbot — it is a **code-aware AI system** designed to help developers **find errors, understand code, and improve software quality**.
