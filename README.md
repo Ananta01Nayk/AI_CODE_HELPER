@@ -84,7 +84,3 @@ Press **F5** → Open Chat → Ask questions
 - VS Code Chat UI: ✅
 
 ---
-
-## 🏁 Note
-
-This is a real AI developer tool, suitable for portfolio and internship demos.
